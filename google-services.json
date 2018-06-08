@@ -1,0 +1,59 @@
+{
+  "project_info": {
+    "project_number": "311149213603",
+    "firebase_url": "https://wdonation-2ded8.firebaseio.com",
+    "project_id": "wdonation-2ded8",
+    "storage_bucket": "wdonation-2ded8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:311149213603:android:f83593ff11307dbe",
+        "android_client_info": {
+          "package_name": "fr.wayd.wdonation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "311149213603-6anom9l2irjlm2baa2tod72qm8si1eu4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fr.wayd.wdonation",
+            "certificate_hash": "5b70280d9153c71fd56cd5896f0c1568ff4965a2"
+          }
+        },
+        {
+          "client_id": "311149213603-c5et2o45iajepahgbekplof1922ktbfd.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "311149213603-c5et2o45iajepahgbekplof1922ktbfd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARPY6mUUtcJTSSE3s0B6qrziyDY5j57l0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "311149213603-c5et2o45iajepahgbekplof1922ktbfd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
