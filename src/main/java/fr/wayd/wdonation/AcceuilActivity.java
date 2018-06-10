@@ -2,17 +2,9 @@ package fr.wayd.wdonation;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.support.constraint.ConstraintLayout;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -44,12 +36,15 @@ import java.util.List;
 
 
 import fr.wayd.bean.Association;
+import fr.wayd.bean.Click;
+import fr.wayd.bean.Commun;
+import fr.wayd.bean.Configuration;
 import fr.wayd.bean.User;
 
 public class AcceuilActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
-
+    private int nbrMaxClicsAutorise = 4;
     DatabaseReference mDatabaseUsers;
     private FirebaseAuth mAuth;
     private NavigationView navigationView;
@@ -61,12 +56,15 @@ public class AcceuilActivity extends AppCompatActivity
     private TextView titre;
     private boolean anonyme;
     ArrayAdapter<Association> associationAdapter;
-    private MenuItem menuadmin;
+    private MenuItem menuadmin, configurationapplication;
     private Menu menudrawer;
     private ImageView photoassociation;
     ProgressDialog mProgressDialog;
-    private String android_id ;
-    private String TAG="AcceuilActivity";
+    private String android_id;
+    private TextView ensavoirplus, totalclickjour;
+    private String TAG = "AcceuilActivity";
+    private int nbrtotalclicksjours = 0;
+   private  Button don;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +73,8 @@ public class AcceuilActivity extends AppCompatActivity
         setContentView(R.layout.activity_acceuil);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         mProgressDialog = ProgressDialog.show(this, "Patientez ...", "Chargement...", true);
-
+        android_id = Settings.Secure.getString(this.getContentResolver(),
+                Settings.Secure.ANDROID_ID);
         Intent intent = getIntent();
         anonyme = intent.getBooleanExtra("anonyme", false);
         spinnerlistassociation = findViewById(R.id.spinnerlistassociation);
@@ -83,11 +82,13 @@ public class AcceuilActivity extends AppCompatActivity
         detail = findViewById(R.id.detail);
         titre = findViewById(R.id.titre);
         photoassociation = findViewById(R.id.photoassociation);
-        setSupportActionBar(toolbar);
+        ensavoirplus = findViewById(R.id.ensavoirplus);
+        totalclickjour = findViewById(R.id.totalclickjour);
+         setSupportActionBar(toolbar);
         mAuth = FirebaseAuth.getInstance();
-        associationAdapter = new ArrayAdapter<Association>(getBaseContext(),R.layout.item_spinner, associationList);
+        associationAdapter = new ArrayAdapter<Association>(getBaseContext(), R.layout.item_spinner, associationList);
         spinnerlistassociation.setAdapter(associationAdapter);
-        Button don = findViewById(R.id.don);
+        don = findViewById(R.id.don);
 
         don.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,6 +99,16 @@ public class AcceuilActivity extends AppCompatActivity
                 appel.putExtra("association", assocationSelected);
                 appel.putExtra("anonyme", anonyme);
                 startActivity(appel);
+            }
+        });
+
+        ensavoirplus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(assocationSelected.getLienFacebook()));
+                startActivity(i);
             }
         });
 
@@ -112,7 +123,7 @@ public class AcceuilActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         menudrawer = navigationView.getMenu();
         menuadmin = menudrawer.findItem(R.id.admin);
-        menuadmin.setVisible(false);
+        configurationapplication =menudrawer.findItem(R.id.configurationapplication);
 
 
         //       BusMessages.addBusMessageListener(this);
@@ -136,27 +147,38 @@ public class AcceuilActivity extends AppCompatActivity
             }
         });
 
-        android_id= Settings.Secure.getString(this.getContentResolver(),
-                Settings.Secure.ANDROID_ID);
-
-      addChildAssociationListener();
-      ischildExist(android_id);
-
-     // addChildClicksListener(android_id);
+        addConfigurationValueListener();
+        addChildAssociationListener();
+        initNoeudTerminaux(android_id);
 
 
     }
 
-    private void ischildExist(final String android_id) {
-        FirebaseDatabase.getInstance().getReference().child("clicks").child(android_id).addListenerForSingleValueEvent(new ValueEventListener() {
+    private void addConfigurationValueListener() {
+        FirebaseDatabase.getInstance().getReference().child("configuration").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-               Object valeur= dataSnapshot.getValue(Object.class);
+                Configuration configuration = dataSnapshot.getValue(Configuration.class);
+                nbrMaxClicsAutorise = configuration.getNbrclicksjourmax();
+                updateUInbrCLicksTotal();
+            }
 
-               if (valeur==null)
-                   FirebaseDatabase.getInstance().getReference().child("clicks").child(android_id).child(Long.toString(System.currentTimeMillis())).setValue("time");
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
-                addChildClicksListener(android_id);
+            }
+        });
+    }
+    private void initNoeudTerminaux(final String android_id) {
+        FirebaseDatabase.getInstance().getReference().child("terminaux").child(android_id).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Object valeur = dataSnapshot.getValue(Object.class);
+
+                if (valeur == null)
+                    FirebaseDatabase.getInstance().getReference().child("terminaux").child(android_id).child(Commun.getDateNowStr()).setValue(new Click(0));
+
+                addChildTerminauxListener(android_id);
             }
 
             @Override
@@ -167,20 +189,30 @@ public class AcceuilActivity extends AppCompatActivity
 
     }
 
-    private void addChildClicksListener(String android_id) {
-        FirebaseDatabase.getInstance().getReference().child("clicks").child(android_id).addChildEventListener(new ChildEventListener() {
+    private void addChildTerminauxListener(String android_id) {
+        FirebaseDatabase.getInstance().getReference().child("terminaux").child(android_id).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
-              String s1=dataSnapshot.getKey();
-              System.out.println("noued "+s1);
+                String nowStr = Commun.getDateNowStr();
 
+                if (nowStr.equals(dataSnapshot.getKey())) {
+                    Click click = dataSnapshot.getValue(Click.class);
+                    if (click != null) nbrtotalclicksjours = click.getNbr();
 
+                }
+                updateUInbrCLicksTotal();
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
+                String nowStr = Commun.getDateNowStr();
+                if (nowStr.equals(dataSnapshot.getKey())) {
+                    Click click = dataSnapshot.getValue(Click.class);
+                    if (click != null) nbrtotalclicksjours = click.getNbr();
+                }
+                updateUInbrCLicksTotal();
             }
 
             @Override
@@ -198,6 +230,15 @@ public class AcceuilActivity extends AppCompatActivity
             }
         });
 
+    }
+
+    private void updateUInbrCLicksTotal() {
+        if (nbrtotalclicksjours < nbrMaxClicsAutorise)
+            totalclickjour.setText("Vous avez participé à " + Integer.toString(nbrtotalclicksjours) + "/" + nbrMaxClicsAutorise + " dons pour la journée.");
+        else {
+            totalclickjour.setText("Vous avez utilisé tous vos droits à dons.");
+            don.setVisibility(View.GONE);
+        }
     }
 
 
@@ -261,13 +302,15 @@ public class AcceuilActivity extends AppCompatActivity
     }
 
     private void updateUIassociation(Association association) {
-        System.out.println("riiiiii" + photoassociation);
         nbrcliks.setText("" + Integer.toString(association.getNbrclik()));
         detail.setText(association.getDetail());
         titre.setText(association.getTitre());
 
-        if (association.getUrlphoto()!=null &&!association.getUrlphoto().isEmpty())
-        Picasso.get().load(association.getUrlphoto()).into(photoassociation);
+        if (association.getLienFacebook() != null && !association.getLienFacebook().isEmpty())
+            ensavoirplus.setVisibility(View.VISIBLE);
+
+        if (association.getUrlphoto() != null && !association.getUrlphoto().isEmpty())
+            Picasso.get().load(association.getUrlphoto()).into(photoassociation);
         else
             photoassociation.setImageBitmap(null);
     }
@@ -295,7 +338,7 @@ public class AcceuilActivity extends AppCompatActivity
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
-                if (user.getProfil() == User.ADMIN_WAYD) menuadmin.setVisible(true);
+
                 udpateNavHedear(user);
                 mProgressDialog.dismiss();
             }
@@ -380,6 +423,14 @@ public class AcceuilActivity extends AppCompatActivity
             finish();
 
         }
+        else if (id == R.id.configurationapplication) {
+            Intent appel = new Intent(AcceuilActivity.this,
+                    ConfigurationActivity.class);
+
+            appel.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(appel);
+
+        }
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -388,14 +439,17 @@ public class AcceuilActivity extends AppCompatActivity
     }
 
 
-    // @Override
-    //public void onChangeUser (User user){
 
-    //  udpateNavHedear(user);
-    // }
 
     private void udpateNavHedear(User user) {
-
+        if (user.getProfil() == User.ADMIN_WAYD){
+            menuadmin.setVisible(true);
+            configurationapplication.setVisible(true);
+        }
+        else
+        {   menuadmin.setVisible(false);
+            configurationapplication.setVisible(false);
+        }
         View hView = navigationView.getHeaderView(0);
         ImageView photo = (ImageView) hView.findViewById(R.id.photo);
         TextView pseudo = (TextView) hView.findViewById(R.id.pseudo);
@@ -416,7 +470,6 @@ public class AcceuilActivity extends AppCompatActivity
         startActivity(Intent.createChooser(sharingIntent, "Shearing Option"));
 
     }
-
 
 
     @Override

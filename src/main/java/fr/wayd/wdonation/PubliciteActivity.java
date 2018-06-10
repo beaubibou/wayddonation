@@ -3,6 +3,7 @@ package fr.wayd.wdonation;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.provider.Settings;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -22,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import fr.wayd.bean.Association;
 import fr.wayd.dao.Dao_Associations;
+import fr.wayd.dao.Dao_Terminaux;
 import fr.wayd.dao.Dao_Users;
 
 public class PubliciteActivity extends AppCompatActivity implements RewardedVideoAdListener, View.OnClickListener {
@@ -36,6 +38,7 @@ public class PubliciteActivity extends AppCompatActivity implements RewardedVide
     Button ouipartage;
     Button nonpartage;
     TextView text_mercidon;
+    private String android_id;
     private Association associationselected;
 
     @Override
@@ -43,6 +46,8 @@ public class PubliciteActivity extends AppCompatActivity implements RewardedVide
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_publicite);
+        android_id = Settings.Secure.getString(this.getContentResolver(),
+                Settings.Secure.ANDROID_ID);
         MobileAds.initialize(this,
                 idApplication);
         Intent intent = getIntent();
@@ -111,6 +116,7 @@ public class PubliciteActivity extends AppCompatActivity implements RewardedVide
         }
 
         Dao_Associations.addClickTransaction(associationselected.getId());
+        Dao_Terminaux.addClickTerminal(android_id);
 
         donok = true;
         Toast.makeText(this, "Votre don est  pris en compte", Toast.LENGTH_SHORT).show();

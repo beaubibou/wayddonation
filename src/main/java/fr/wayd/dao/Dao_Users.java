@@ -10,6 +10,10 @@ import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Transaction;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import fr.wayd.bean.Click;
 import fr.wayd.bean.User;
 
 public class Dao_Users {
@@ -41,6 +45,9 @@ private static String TAG="Dao_Users";
         });
 
     }
+
+
+
     public static void addClickAnonyme(String idAnonyme) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 

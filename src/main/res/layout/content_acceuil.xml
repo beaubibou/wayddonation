@@ -53,7 +53,8 @@
                 style="@style/Base.TextAppearance.AppCompat.Medium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLines="2"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textStyle="bold" />
 
 
@@ -65,11 +66,11 @@
                 android:layout_height="wrap_content"
 
                 android:ellipsize="end"
-                android:maxLines="5" />
+                android:maxLines="3" />
 
             <TextView
                 android:id="@+id/ensavoirplus"
-
+                android:visibility="gone"
                 style="@style/Base.TextAppearance.AppCompat.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -81,7 +82,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="10dp"
 
                 android:orientation="horizontal"
                 android:gravity="left|center_vertical">
@@ -91,8 +92,7 @@
                     style="@style/Base.TextAppearance.AppCompat.Medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
+
                     android:text="Dons " />
 
                 <TextView
@@ -115,7 +115,20 @@
                 style="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@android:color/background_light"
                 android:textStyle="bold" />
+
+            <TextView
+
+                android:id="@+id/totalclickjour"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:textStyle="bold|italic" />
+
         </LinearLayout>
+
+
     </ScrollView>
 
 </android.support.constraint.ConstraintLayout>

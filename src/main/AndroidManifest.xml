@@ -20,24 +20,26 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".AcceuilActivity"
             android:label="@string/title_activity_acceuil"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:launchMode="singleTask"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".PubliciteActivity" />
         <activity android:name=".AddAssociationActivity" />
         <activity
             android:name=".ListAssociationActivity"
             android:label="@string/title_activity_list_association"
-            android:theme="@style/AppTheme.NoActionBar"
-           >
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".ConfigurationActivity"
+            android:label="@string/title_activity_configuration"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

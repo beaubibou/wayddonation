@@ -1,6 +1,8 @@
 package fr.wayd.wdonation;
 
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.content.Intent;
 
@@ -9,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -25,7 +28,14 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import fr.wayd.bean.Click;
+import fr.wayd.bean.Commun;
+import fr.wayd.bean.Configuration;
 import fr.wayd.dao.Dao_Users;
 
 public class Login extends AppCompatActivity implements  View.OnClickListener {
@@ -34,6 +44,8 @@ public class Login extends AppCompatActivity implements  View.OnClickListener {
     private final int RC_SIGN_IN=9001;
     private FirebaseAuth mAuth;
     private String TAG="MainActivity";
+    private int versionStore;
+    private int versionCode;
  //   public static  String idAnonyme="1000";
 
 
@@ -41,6 +53,17 @@ public class Login extends AppCompatActivity implements  View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        PackageInfo pInfo = null;
+        try {
+            pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        //String version = pInfo.versionName;
+        versionCode = pInfo.versionCode;
+
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -52,11 +75,48 @@ public class Login extends AppCompatActivity implements  View.OnClickListener {
         SignInButton   mSignInButton = findViewById(R.id.google_sign_in_button);
         Button anonyme=  findViewById(R.id.anonyme);
         anonyme.setOnClickListener(this);
-        mSignInButton.setSize(SignInButton.SIZE_WIDE);
+        mSignInButton.setSize(SignInButton.SIZE_STANDARD);
         mSignInButton.setOnClickListener(this);
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
+        readConfiguration();
 
+
+    }
+
+    private void readConfiguration() {
+        FirebaseDatabase.getInstance().getReference().child("configuration").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Configuration configuration = dataSnapshot.getValue(Configuration.class);
+                versionStore = configuration.getVersionstore();
+
+              if ( testVersion()){
+                  FirebaseUser currentUser = mAuth.getCurrentUser();
+                  updateUI(currentUser);
+
+
+              }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private boolean testVersion() {
+
+
+        if (versionCode<versionStore){
+           Toast.makeText(getBaseContext(), "Votre version n'est pas à jour", Toast.LENGTH_SHORT).show();
+           return false;
+
+        }
+
+
+        return true;
 
     }
 
@@ -70,10 +130,12 @@ public class Login extends AppCompatActivity implements  View.OnClickListener {
         int id = view.getId();
 
         if (id == R.id.google_sign_in_button){
-         signIn();
+         if (testVersion())
+            signIn();
             }
 
         if (id == R.id.anonyme){
+          if (testVersion())
             signInAnonyme();
         }
 

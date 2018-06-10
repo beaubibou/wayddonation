@@ -26,4 +26,5 @@
     <string name="title_activity_update_association">UpdateAssociation</string>
     <string name="title_activity_list_association">ListAssociationActivity</string>
     <string name="anonymeid">1000</string>
+    <string name="title_activity_configuration">ConfigurationActivity</string>
 </resources>
