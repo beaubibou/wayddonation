@@ -22,6 +22,7 @@ import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 import com.google.firebase.auth.FirebaseAuth;
 
 import fr.wayd.bean.Association;
+import fr.wayd.bean.Commun;
 import fr.wayd.dao.Dao_Associations;
 import fr.wayd.dao.Dao_Terminaux;
 import fr.wayd.dao.Dao_Users;
@@ -34,7 +35,7 @@ public class PubliciteActivity extends AppCompatActivity implements RewardedVide
     private FirebaseAuth mAuth;
     private String idApplication = "ca-app-pub-3940256099942544/5224354917";
     private String idBlockReward = "ca-app-pub-3940256099942544/5224354917";
-    private boolean anonyme;
+    // private boolean anonyme;
     Button ouipartage;
     Button nonpartage;
     TextView text_mercidon;
@@ -53,9 +54,9 @@ public class PubliciteActivity extends AppCompatActivity implements RewardedVide
         Intent intent = getIntent();
         associationselected = intent.getParcelableExtra("association");
 
-        idApplication=associationselected.getIdapplication();
-        idBlockReward=associationselected.getIdcampagne();
-        anonyme=intent.getBooleanExtra("anonyme",false);
+        idApplication = associationselected.getIdapplication();
+        idBlockReward = associationselected.getIdcampagne();
+        //    anonyme=intent.getBooleanExtra("anonyme",false);
         text_mercidon = findViewById(R.id.text_mercidon);
         ouipartage = findViewById(R.id.ouipartage);
         nonpartage = findViewById(R.id.nonpartage);
@@ -64,7 +65,7 @@ public class PubliciteActivity extends AppCompatActivity implements RewardedVide
         mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
         mRewardedVideoAd.setRewardedVideoAdListener(this);
         mAuth = FirebaseAuth.getInstance();
-        mProgressDialog = ProgressDialog.show(this, "Patientez ...", "Chargement de la publicté...", true);
+        mProgressDialog = ProgressDialog.show(this, "Patientez ...", "Chargement du don...", true);
         mProgressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
@@ -106,21 +107,16 @@ public class PubliciteActivity extends AppCompatActivity implements RewardedVide
     @Override
     public void onRewarded(RewardItem rewardItem) {
 
-        if (!anonyme) {
 
-            Dao_Users.addClick(mAuth.getCurrentUser().getUid());
-        }
-        else
-        {
-            Dao_Users.addClickAnonyme(getString(R.string.anonymeid));
-        }
+        Dao_Users.addClick(mAuth.getCurrentUser().getUid());
+
 
         Dao_Associations.addClickTransaction(associationselected.getId());
         Dao_Terminaux.addClickTerminal(android_id);
 
         donok = true;
         Toast.makeText(this, "Votre don est  pris en compte", Toast.LENGTH_SHORT).show();
-       // text_mercidon.setVisibility(View.VISIBLE);
+        // text_mercidon.setVisibility(View.VISIBLE);
         //ouipartage.setVisibility(View.VISIBLE);
         //nonpartage.setVisibility(View.VISIBLE);
         showAlertDialog();
@@ -129,12 +125,13 @@ public class PubliciteActivity extends AppCompatActivity implements RewardedVide
     private void showAlertDialog() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(PubliciteActivity.this);
-        builder.setTitle("Félicications");
-        builder.setMessage("Merci pour votre don");
+        builder.setCancelable(false);
+        builder.setTitle("Merci pour votre don");
+        builder.setMessage("Voulez-vous partager votre bonne action ?");
         builder.setPositiveButton("Partager", new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int which) {
-               share();
+                share();
                 dialog.dismiss();
             }
         });
@@ -183,6 +180,7 @@ public class PubliciteActivity extends AppCompatActivity implements RewardedVide
     @Override
     public void onStart() {
         super.onStart();
+
     }
 
     public void retourAccueil() {
@@ -225,11 +223,8 @@ public class PubliciteActivity extends AppCompatActivity implements RewardedVide
                 share();
                 break;
             case R.id.nonpartage:
-               retourAccueil();
+                retourAccueil();
                 break;
-
-
-
         }
     }
 
@@ -237,8 +232,8 @@ public class PubliciteActivity extends AppCompatActivity implements RewardedVide
         finish();
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
-        String shareBodyText = "http://play.google.com/store/apps/details?id=fr.wayd.wdonation";
-        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Wayd lien");
+        String shareBodyText = Commun.getMessagePartage(associationselected);
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,  getString(R.string.titrepartage));
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBodyText);
         startActivity(Intent.createChooser(sharingIntent, "Shearing Option"));
 

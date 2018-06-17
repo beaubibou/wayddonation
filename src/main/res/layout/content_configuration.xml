@@ -17,12 +17,24 @@
             android:layout_margin="30dp"
             android:gravity="center_horizontal|center_vertical">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nbr max de cliks par jour"/>
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/nbrclicsmaxparjour"
                 android:hint="Nbr cliks max par jour"/>
-
+            <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Version du store"/>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/versionstore"
+                android:hint="Version store"/>
         </LinearLayout>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>

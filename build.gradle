@@ -13,10 +13,11 @@ android {
     defaultConfig {
         applicationId "fr.wayd.wdonation"
         minSdkVersion 17
-        targetSdkVersion 26
-        versionCode 23
+        targetSdkVersion 27
+        versionCode 31
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
@@ -28,8 +29,8 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:appcompat-v7:27.1.0'
+    implementation 'com.android.support:design:27.1.0'
     implementation 'com.google.firebase:firebase-core:15.0.0'
     implementation 'com.google.firebase:firebase-auth:15.0.0'
     implementation 'com.google.android.gms:play-services-auth:15.0.0'
@@ -37,10 +38,13 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:15.0.0'
     implementation 'com.google.android.gms:play-services-wearable:15.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    implementation 'com.android.support:support-vector-drawable:27.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.facebook.android:facebook-android-sdk:4.1.0'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

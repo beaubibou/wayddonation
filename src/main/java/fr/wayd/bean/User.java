@@ -10,6 +10,7 @@ public class User {
     private String mail;
     private int nbrclik=0;
     private int profil;
+    private boolean cgu;
 
     public User() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
@@ -26,9 +27,15 @@ public class User {
         this.nbrclik = nbrclik;
     }
 
+    public boolean isCgu() {
+        return cgu;
+    }
 
+    public void setCgu(boolean cgu) {
+        this.cgu = cgu;
+    }
 
-    public User( String nom, String mail,int profil) {
+    public User(String nom, String mail, int profil, boolean cgu) {
         this.nom = nom;
         this.mail =mail;
         this.profil=profil;

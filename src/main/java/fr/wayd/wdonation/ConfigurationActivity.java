@@ -19,7 +19,8 @@ import fr.wayd.bean.Configuration;
 
 public class ConfigurationActivity extends AppCompatActivity {
 
-    private TextView nbrclicsmaxparjour;
+    private TextView nbrclicsmaxparjour, versionstore;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,20 +30,24 @@ public class ConfigurationActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         nbrclicsmaxparjour = findViewById(R.id.nbrclicsmaxparjour);
+        versionstore = findViewById(R.id.versionstore);
+
         getValueConfiguration();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-        updateConfiguration();
+                updateConfiguration();
             }
         });
     }
 
     private void updateConfiguration() {
-       int nbrmaxjour=Integer.valueOf(nbrclicsmaxparjour.getText().toString());
-       FirebaseDatabase.getInstance().getReference().child("configuration").child("nbrclicksjourmax").setValue(nbrmaxjour);
+        int nbrmaxjour = Integer.valueOf(nbrclicsmaxparjour.getText().toString());
+        int versionStore = Integer.valueOf(versionstore.getText().toString());
+        FirebaseDatabase.getInstance().getReference().child("configuration").child("nbrclicksjourmax").setValue(nbrmaxjour);
+        FirebaseDatabase.getInstance().getReference().child("configuration").child("versionstore").setValue(versionStore);
     }
 
 
@@ -67,5 +72,6 @@ public class ConfigurationActivity extends AppCompatActivity {
 
     private void updateUIconfiguration(Configuration configuration) {
         nbrclicsmaxparjour.setText(Integer.toString(configuration.getNbrclicksjourmax()));
+        versionstore.setText(Integer.toString(configuration.getVersionstore()));
     }
 }

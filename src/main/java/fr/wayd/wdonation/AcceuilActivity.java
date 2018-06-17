@@ -1,10 +1,14 @@
 package fr.wayd.wdonation;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,8 +24,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -54,7 +60,7 @@ public class AcceuilActivity extends AppCompatActivity
     private TextView detail;
     private TextView nbrcliks;
     private TextView titre;
-    private boolean anonyme;
+    //private boolean anonyme;
     ArrayAdapter<Association> associationAdapter;
     private MenuItem menuadmin, configurationapplication;
     private Menu menudrawer;
@@ -64,7 +70,9 @@ public class AcceuilActivity extends AppCompatActivity
     private TextView ensavoirplus, totalclickjour;
     private String TAG = "AcceuilActivity";
     private int nbrtotalclicksjours = 0;
-   private  Button don;
+    private Button don;
+    private int versionStore;
+    private int versionCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,8 +83,18 @@ public class AcceuilActivity extends AppCompatActivity
         mProgressDialog = ProgressDialog.show(this, "Patientez ...", "Chargement...", true);
         android_id = Settings.Secure.getString(this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
-        Intent intent = getIntent();
-        anonyme = intent.getBooleanExtra("anonyme", false);
+
+
+        PackageInfo pInfo = null;
+        try {
+            pInfo = this.getPackageManager().getPackageInfo(getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        versionCode = pInfo.versionCode;
+
+        readConfiguration();
+
         spinnerlistassociation = findViewById(R.id.spinnerlistassociation);
         nbrcliks = findViewById(R.id.nbrclicks);
         detail = findViewById(R.id.detail);
@@ -84,7 +102,7 @@ public class AcceuilActivity extends AppCompatActivity
         photoassociation = findViewById(R.id.photoassociation);
         ensavoirplus = findViewById(R.id.ensavoirplus);
         totalclickjour = findViewById(R.id.totalclickjour);
-         setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
         mAuth = FirebaseAuth.getInstance();
         associationAdapter = new ArrayAdapter<Association>(getBaseContext(), R.layout.item_spinner, associationList);
         spinnerlistassociation.setAdapter(associationAdapter);
@@ -97,7 +115,7 @@ public class AcceuilActivity extends AppCompatActivity
                         PubliciteActivity.class);
                 appel.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 appel.putExtra("association", assocationSelected);
-                appel.putExtra("anonyme", anonyme);
+                //     appel.putExtra("anonyme", anonyme);
                 startActivity(appel);
             }
         });
@@ -123,16 +141,13 @@ public class AcceuilActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         menudrawer = navigationView.getMenu();
         menuadmin = menudrawer.findItem(R.id.admin);
-        configurationapplication =menudrawer.findItem(R.id.configurationapplication);
+        configurationapplication = menudrawer.findItem(R.id.configurationapplication);
 
 
         //       BusMessages.addBusMessageListener(this);
 
-        if (mAuth.getCurrentUser() != null && anonyme == false)
-            addUserEventListenerValue();
-
-        if (mAuth.getCurrentUser() == null && anonyme)
-            addAnonymeEventListenerValue();
+        // if (mAuth.getCurrentUser() != null && anonyme == false)
+        addUserEventListenerValue();
 
 
         spinnerlistassociation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -169,6 +184,7 @@ public class AcceuilActivity extends AppCompatActivity
             }
         });
     }
+
     private void initNoeudTerminaux(final String android_id) {
         FirebaseDatabase.getInstance().getReference().child("terminaux").child(android_id).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -233,8 +249,11 @@ public class AcceuilActivity extends AppCompatActivity
     }
 
     private void updateUInbrCLicksTotal() {
+
+        int reste = nbrMaxClicsAutorise - nbrtotalclicksjours;
+
         if (nbrtotalclicksjours < nbrMaxClicsAutorise)
-            totalclickjour.setText("Vous avez participé à " + Integer.toString(nbrtotalclicksjours) + "/" + nbrMaxClicsAutorise + " dons pour la journée.");
+            totalclickjour.setText(Integer.toString(reste) + " dons restants pour la journée");
         else {
             totalclickjour.setText("Vous avez utilisé tous vos droits à dons.");
             don.setVisibility(View.GONE);
@@ -334,26 +353,8 @@ public class AcceuilActivity extends AppCompatActivity
 
     private void addUserEventListenerValue() {
         mDatabaseUsers = FirebaseDatabase.getInstance().getReference();
+
         mDatabaseUsers.child("users").child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
-
-                udpateNavHedear(user);
-                mProgressDialog.dismiss();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-    }
-
-    private void addAnonymeEventListenerValue() {
-        mDatabaseUsers = FirebaseDatabase.getInstance().getReference();
-        mDatabaseUsers.child("users").child(getString(R.string.anonymeid)).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 User user = dataSnapshot.getValue(User.class);
@@ -383,7 +384,8 @@ public class AcceuilActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.acceuil, menu);
+
+        //getMenuInflater().inflate(R.menu.acceuil, menu);
         return true;
     }
 
@@ -422,14 +424,38 @@ public class AcceuilActivity extends AppCompatActivity
             mAuth.signOut();
             finish();
 
-        }
-        else if (id == R.id.configurationapplication) {
+        } else if (id == R.id.configurationapplication) {
             Intent appel = new Intent(AcceuilActivity.this,
                     ConfigurationActivity.class);
 
             appel.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(appel);
 
+        } else if (id == R.id.leconcept) {
+            Intent appel = new Intent(AcceuilActivity.this,
+                    ConceptActivity.class);
+
+            appel.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(appel);
+
+        }
+
+        else if (id == R.id.unprobleme) {
+            Intent appel = new Intent(AcceuilActivity.this,
+                    ProblemeActivity.class);
+
+            appel.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(appel);
+
+        }
+
+
+        else if (id == R.id.apropos) {
+            Intent appel = new Intent(AcceuilActivity.this,
+                    AproposActivity.class);
+
+            appel.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(appel);
         }
 
 
@@ -439,15 +465,12 @@ public class AcceuilActivity extends AppCompatActivity
     }
 
 
-
-
     private void udpateNavHedear(User user) {
-        if (user.getProfil() == User.ADMIN_WAYD){
+        if (user.getProfil() == User.ADMIN_WAYD) {
             menuadmin.setVisible(true);
             configurationapplication.setVisible(true);
-        }
-        else
-        {   menuadmin.setVisible(false);
+        } else {
+            menuadmin.setVisible(false);
             configurationapplication.setVisible(false);
         }
         View hView = navigationView.getHeaderView(0);
@@ -457,15 +480,17 @@ public class AcceuilActivity extends AppCompatActivity
         TextView nbrdon = (TextView) hView.findViewById(R.id.nbrdon);
         pseudo.setText(user.getNom());
         email.setText(user.getMail());
-        nbrdon.setText("Vos dons " + user.getNbrclik());
-
+        if (mAuth.getCurrentUser().getUid().equals(getString(R.string.idanonyme)))
+        nbrdon.setText("Total des dons anonymes " + user.getNbrclik());
+        else
+            nbrdon.setText("Total de vos dons " + user.getNbrclik());
     }
 
     private void share() {
         Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
-        String shareBodyText = "http://play.google.com/store/apps/details?id=fr.wayd.wdonation";
-        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Wayd lien");
+        String shareBodyText = Commun.getMessagePartage(assocationSelected);
+        sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.titrepartage));
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBodyText);
         startActivity(Intent.createChooser(sharingIntent, "Shearing Option"));
 
@@ -479,4 +504,67 @@ public class AcceuilActivity extends AppCompatActivity
 
         }
     }
+
+    private void readConfiguration() {
+        FirebaseDatabase.getInstance().getReference().child("configuration").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Configuration configuration = dataSnapshot.getValue(Configuration.class);
+                versionStore = configuration.getVersionstore();
+
+                if (!testVersion()) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(AcceuilActivity.this);
+                    builder.setCancelable(false);
+                    builder.setTitle("Mise à jour ");
+                    builder.setMessage("Votre version n'est pas à jour");
+                    builder.setPositiveButton("Mettre à jour", new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(Intent.ACTION_VIEW);
+                            intent.setData(Uri.parse("market://details?id=fr.wayd.wdonation"));
+                            startActivity(intent);
+                            dialog.dismiss();
+                        }
+                    });
+
+                    builder.setNegativeButton("Quitter", new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            mAuth.signOut();
+                            dialog.dismiss();
+                            finish();
+                        }
+                    });
+
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+    private boolean testVersion() {
+
+
+        if (versionCode < versionStore) {
+            //     Toast.makeText(getBaseContext(), "Votre version n'est pas à jour", Toast.LENGTH_SHORT).show();
+            return false;
+
+        }
+
+
+        return true;
+
+    }
+
 }
