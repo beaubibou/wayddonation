@@ -14,7 +14,7 @@ android {
         applicationId "fr.wayd.wdonation"
         minSdkVersion 17
         targetSdkVersion 27
-        versionCode 31
+        versionCode 37
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -44,6 +44,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.facebook.android:facebook-android-sdk:4.1.0'
+    implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
+
 
 }
 

@@ -15,17 +15,20 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import fr.wayd.bean.Commun;
 import fr.wayd.bean.Probleme;
 
 public class ProblemeActivity extends AppCompatActivity {
-
+    private FirebaseAuth mAuth;
+    TextView mail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_probleme);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
+      //  Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+       // setSupportActionBar(toolbar);
+        mAuth = FirebaseAuth.getInstance();
+        mail = findViewById(R.id.mail);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -38,20 +41,38 @@ public class ProblemeActivity extends AppCompatActivity {
             }
         });
 
+        if (!mAuth.getCurrentUser().getUid().equals(getString(R.string.idanonyme)))
+           mail.setText(mAuth.getCurrentUser().getEmail());
+
     }
 
+    public final static boolean isValidEmail(CharSequence target) {
+        if (target == null) {
+            return false;
+        } else {
+            return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+        }
+    }
     private void ajouteProbleme() {
 
         TextView probleme = findViewById(R.id.probleme);
         String problemeStr = probleme.getText().toString();
         problemeStr = problemeStr.trim();
+
+        String email=mail.getText().toString();
+        email=email.trim();
+
+        if (!email.isEmpty() && !isValidEmail(email)){
+            Toast.makeText(this, getString(R.string.erreur_mailnonvalide), Toast.LENGTH_SHORT).show();
+            return;
+        }
         if (problemeStr.isEmpty()) {
-            Toast.makeText(this, "Saisissez votre problème", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,  getString(R.string.erreur_problemenonrempli), Toast.LENGTH_SHORT).show();
             return;
         }
         String time = Long.toString(System.currentTimeMillis());
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        Probleme prb = new Probleme(uid, problemeStr, time);
+        Probleme prb = new Probleme(uid, problemeStr, time,email);
 
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         String id = uid + "-" + time;

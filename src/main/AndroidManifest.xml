@@ -10,13 +10,14 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label=""
+        android:label="wDonation"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".Login"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,6 +26,7 @@
         </activity>
         <activity
             android:name=".AcceuilActivity"
+            android:label="Les associations du moment"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -41,11 +43,17 @@
         <activity android:name=".AproposActivity" />
         <activity
             android:name=".ConceptActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="" />
+        <activity
+            android:name=".CguActivity"
+            android:label="" />
+        <activity
+            android:name=".RegleConfidenceActivity"
+            android:label="" />
         <activity
             android:name=".ProblemeActivity"
-
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:label="" />
+        <activity android:name=".ParametreActivity"></activity>
     </application>
 
 </manifest>

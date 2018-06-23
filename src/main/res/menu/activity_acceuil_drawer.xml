@@ -34,6 +34,9 @@
             android:id="@+id/apropos"
             android:title="A propos" />
         <item
+            android:id="@+id/parametre"
+            android:title="Paramètres" />
+        <item
             android:id="@+id/nav_deconnexion"
             android:title="Déconnexion" />
 

@@ -23,11 +23,9 @@
             style="@style/Base.TextAppearance.AppCompat.Large"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+
             android:layout_marginTop="10dp"
-            android:text="wDonation ou comment la publicité sert un but associatif !"
-
-
+            android:text="Politique de confidentialité"
             android:textStyle="normal|bold" />
 
         <TextView
@@ -35,7 +33,7 @@
             style="@style/Base.TextAppearance.AppCompat.Medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/leconcept" />
+            android:text="@string/politiqueconfidentialite" />
     </LinearLayout>
 
 </ScrollView>

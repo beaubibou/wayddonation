@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -98,8 +99,11 @@ public class PubliciteActivity extends AppCompatActivity implements RewardedVide
 
     @Override
     public void onRewardedVideoAdClosed() {
-        if (!donok)
+        if (!donok){
+            messageDonPasPrisEnCompte();
             retourAccueil();
+        }
+
 
 
     }
@@ -109,16 +113,14 @@ public class PubliciteActivity extends AppCompatActivity implements RewardedVide
 
 
         Dao_Users.addClick(mAuth.getCurrentUser().getUid());
-
-
         Dao_Associations.addClickTransaction(associationselected.getId());
         Dao_Terminaux.addClickTerminal(android_id);
 
         donok = true;
-        Toast.makeText(this, "Votre don est  pris en compte", Toast.LENGTH_SHORT).show();
-        // text_mercidon.setVisibility(View.VISIBLE);
-        //ouipartage.setVisibility(View.VISIBLE);
-        //nonpartage.setVisibility(View.VISIBLE);
+
+        Toast toast = Toast.makeText(this,"Votre don est  pris en compte. Vous pouvez quitter la vidéo.", Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
         showAlertDialog();
     }
 
@@ -154,13 +156,20 @@ public class PubliciteActivity extends AppCompatActivity implements RewardedVide
 
     @Override
     public void onRewardedVideoAdLeftApplication() {
-        Toast.makeText(this, "Votre don n'est pas pris en compte", Toast.LENGTH_SHORT).show();
+        messageDonPasPrisEnCompte();
+    }
+
+    private void messageDonPasPrisEnCompte() {
+        Toast toast = Toast.makeText(this,"Votre don n'a pas été pris en compte", Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();
     }
 
     @Override
     public void onRewardedVideoAdFailedToLoad(int i) {
-        Toast.makeText(this, "Echec de chargement", Toast.LENGTH_SHORT).show();
-        retourAccueil();
+        Toast toast = Toast.makeText(this,"Echec de chargement de la publicité", Toast.LENGTH_LONG);
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.show();   retourAccueil();
     }
 
     @Override

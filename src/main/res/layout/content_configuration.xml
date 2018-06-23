@@ -7,34 +7,39 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".ConfigurationActivity"
     tools:showIn="@layout/activity_configuration">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:layout_margin="30dp"
-            android:gravity="center_horizontal|center_vertical">
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nbr max de cliks par jour"/>
+                android:text="Nbr max de cliks par jour" />
+
             <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:id="@+id/nbrclicsmaxparjour"
-                android:hint="Nbr cliks max par jour"/>
-            <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Version du store"/>
-            <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="Nbr cliks max par jour" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Version du store" />
+
+            <EditText
                 android:id="@+id/versionstore"
-                android:hint="Version store"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Version store" />
         </LinearLayout>
     </ScrollView>
 </android.support.constraint.ConstraintLayout>

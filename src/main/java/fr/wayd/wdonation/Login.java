@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,7 +49,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     private final int RC_SIGN_IN = 9001;
     private FirebaseAuth mAuth;
     private String TAG = "MainActivity";
-
+    private TextView apropos;
     ProgressDialog mProgressDialog;
 
     @Override
@@ -69,8 +70,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         mAuth = FirebaseAuth.getInstance();
         Button mSignInButton = findViewById(R.id.google_sign_in_button);
         Button anonyme = findViewById(R.id.anonyme);
+        apropos = findViewById(R.id.apropos);
+        apropos.setOnClickListener(this);
         anonyme.setOnClickListener(this);
-       // mSignInButton.setSize(SignInButton.SIZE_WIDE);
+        // mSignInButton.setSize(SignInButton.SIZE_WIDE);
         mSignInButton.setOnClickListener(this);
 
         updateUI(mAuth.getCurrentUser());
@@ -98,6 +101,15 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         if (id == R.id.anonyme) {
             // if (testVersion())
             signInAnonyme();
+        }
+
+        if (id == R.id.apropos) {
+
+            Intent appel = new Intent(Login.this,
+                    AproposActivity.class);
+
+            appel.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(appel);
         }
 
 

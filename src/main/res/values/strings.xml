@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Connexion</string>
 
     <!-- Strings related to login -->
@@ -33,7 +33,116 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="titrepartage">WaydDonation </string>
     <string name="title_activity_probleme">ProblemeActivity</string>>
+    <string name="idanonyme">AzxBGzKe5UTF8yfAYNl8oqZueQj2</string>
+    <string name="cgu">
 
-    <string name="idanonyme">AzxBGzKe5UTF8yfAYNl8oqZueQj2</string>>
+
+1. DESCRIPTION DE L\'APPLICATION "\n\n"
+WDONATION est une application mobile (l’ «Application) pour smartphones fonctionnant sous Android.
+L’Application est gratuite et permet de faire un don direct non numéraire en regardant une publicité.
+La liste des fonctionnalités de l\'Application est susceptible d\'évoluer, les développeurs se réservant la possibilité d\'ajouter ou supprimer des services.
+
+L\'application est disponible en français.
+"\n\n"
+2. MENTIONS LEGALES
+        "\n\n"
+En installant et en utilisant l\'Application, l\'utilisateur (l’ « Utilisateur ») est réputé avoir pris connaissance et accepté sans réserve les présentes conditions générales d\'utilisation. Celles-ci étant susceptibles d\'évoluer, l\'Utilisateur est invité à les consulter régulièrement, toute nouvelle version lui étant immédiatement opposable.
+        "\n\n"
+3. DEFINITIONS ET OBJET"\n\n"
+Les présentes conditions générales ont pour objet de définir, d\'une part, les modalités d\'utilisation de l\'Application et, d\'autre part, les conditions d\'accès aux services proposés par les développeurs à l\'Utilisateur. Les termes suivants, utilisés dans les présentes Conditions Générales ont la signification suivante :
+• "Application" désigne la présente application mobile téléchargeable depuis le Play Store et les services proposés par les développeurs ;
+• "Conditions Générales" désigne les présentes Conditions Générales d\'Utilisation de l\'Application ;
+• "Partie" désigne individuellement l\'Utilisateur ou les développeurs de l’Application et "les Parties" collectivement l\'Utilisateur et les développeurs de l’Application ;
+• "Service" désigne toute prestation de service proposée par les développeurs de l\'Application ;
+• "Utilisateur" désigne toute personne physique ayant la capacité juridique de contracter ou toute personne morale qui installe, consulte, utilise les services proposés par l\'application WDONATION.
+"\n\n"4. RESPONSABILITE"\n\n"
+4.1 UTILISATION DE L\'APPLICATION MOBILE WDONATION"\n\n"
+Les développeurs de WDONATION n’émettent aucune garantie de performance de l\'application mobile WDONATION et de disponibilité des services, mais assurent un service 24/7 pour garantir la meilleure disponibilité proportionnellement aux moyens dont ils disposent.
+La responsabilité des développeurs de WDONATION ne saurait être engagée pour tout dommage ou préjudice direct ou indirect, de quelque nature que ce soit, subi par l\'utilisateur du fait :
+• de l\'utilisation de l\'application mobile WDONATION ;
+• du contenu des partenaires externes auxquels les utilisateurs pourraient avoir accès au travers de l’Application ;
+• de l\'impossibilité d\'accéder à l\'application mobile WDONATION ;
+• des erreurs, modifications, mise à jour de l\'application mobile WDONATION.
+"\n\n"4.2 FRAIS DE CONNEXION"\n\n"
+L\'Utilisateur reconnaît et accepte que l\'accès aux services nécessitant une connexion internet puisse générer des frais qui demeurent entièrement à sa charge, les droits et obligations découlant de sa relation contractuelle avec son opérateur de téléphonie mobile s\'appliquant lors de l\'utilisation de l\'Application.
+"\n\n"5. DISPONIBILITE"\n\n"
+L\'Application est proposée pour les terminaux mobiles utilisant le système d\'exploitation Android, l’Application n\’étant pas optimisée pour les tablettes,.
+Les configurations minimales requises permettant le fonctionnement du service sont :
+• système d\'exploitation (versions minimum) : Android 4.4.2;
+• un dispositif permettant d\'accéder à internet (via Wifi ou données mobiles).
+Les développeurs de WDONATION mettront tout en œuvre afin de s\'assurer que l\'Application soit disponible à tout moment. Néanmoins l\'Utilisateur déclare être parfaitement informé que les fonctionnalités de l\'Application sont fournies au moyen d\'Internet et que la disponibilité dudit réseau conditionne l\'accès à ces fonctionnalités. Ainsi, les développeurs de WDONATION seront dégagés de toute responsabilité en cas d\'indisponibilité du Service pour des raisons d’indisponibilités d\’accès à Internet.
+"\n\n"6. ENQUETE DE SATISFACTION"\n\n"
+Soucieux de la satisfaction de ses utilisateurs, les développeurs de WDONATION pourront proposer des enquêtes dans le but d\'améliorer constamment l\'utilisation et les services numériques de l\'application WDONATION.
+"\n\n"7. PROPRIETE INTELLECTUELLE"\n\n"
+Les images, textes, programmes, marques, logos et autres composants de l\'application mobile WDONATION sont protégés par des droits de propriété intellectuelle.
+        Toute copie totale ou partielle de l\'application mobile WDONATION et de son contenu, par quelques procédés que ce soient, sans autorisation préalable et expresse des développeurs de WDONATION est interdite et constitutive de contrefaçon au sens des articles L. 335-2 et suivants du code de la propriété intellectuelle.
+"\n\n"8. LOI APPLICABLE ET ATTRIBUTION DE JURIDICTION"\n\n"
+
+Les présentes conditions générales sont soumises au droit français en cas de litige concernant leur formation, leur interprétation et leur exécution, les Parties conviennent de rechercher une solution amiable.
+        En cas de non résolution du litige à l\'amiable, les Parties soumettront ledit litige à l\'appréciation des tribunaux français compétents.
+        Lorsque l\'Utilisateur est une personne morale, les Parties conviennent que tout litige relatif à la formation, l\'interprétation, l\'exécution des conditions générales est de la compétence exclusive du Tribunal de grande instance de Paris (France).
+
+
+    </string>
+    <string name="donencours"> Merci de patientez...</string>
+    <string name="donok">  Faites votre don</string>
+    <string name="donechec"> Une erreur est survenue</string>
+    <string name="hintdecrivezprobleme">Décrivez votre problème en quelques mots (500 caractères)</string>
+    <string name="leconcept">Vous avez la fibre sociale sans forcément trouver le temps de participer à la vie associative d’une initiative locale ? wDonation est là pour vous ! "\n\n"Issu d’une volonté commune de changer le quotidien (à notre humble niveau) Philippe et Nicolas vous proposent un moyen simple pour apporter votre contribution contre 2 minutes de votre temps."\n\n"
+
+    Les associations locales que nous sélectionnons le sont pour leurs actions et leur philosophie."\n\n"Nous entretenons une relation de transparence et de confiance afin de suivre comment le fruit de vos dons est utilisé."\n\n"
+
+    Tous les dons sont reversés aux associations. Pour nous aider à développer la plateforme et à l’entretenir, vous pouvez nous faire un don en sélectionnant Plateforme wDonation."\n\n"
+
+    Merci de participer à cette aventure !"\n"
+
+    Nicolas - Philippe" </string>
+
+    <string name="politiqueconfidentialite">
+1. Généralités"\n\n"
+WDONATION en sa qualité de responsable du traitement, attache une grande importance à la protection et au respect de votre vie privée. La présente politique vise à vous informer de nos pratiques concernant la collecte, l’utilisation et le partage des informations que vous êtes amenés à nous fournir par le biais de notre plateforme (la « Plateforme ») accessible depuis l’application mobile WDONATION (l’ « Application »)
+Cette politique (ainsi que nos Conditions générales d’utilisation et tout document auquel il y est fait référence) présente la manière dont nous traitons les données personnelles que nous recueillons et que vous nous fournissez. Nous vous invitons à lire attentivement le présent document pour connaître et comprendre nos pratiques quant aux traitements de vos données personnelles que nous mettons en œuvre.
+"\n\n"2. Les informations que nous recueillons
+Nous sommes susceptibles de recueillir et de traiter les données suivantes :
+"\n\n"2.1. Les informations que vous nous transmettez directement
+En utilisant nos Plateformes, vous êtes amenés à nous transmettre des informations, dont certaines sont de nature à vous identifier (« Données Personnelles »). C’est notamment le cas lorsque vous remplissez des formulaires (comme par exemple le formulaire d’inscription), lorsque vous participez à l’un de nos jeux, concours, études ou sondages, lorsque vous nous contactez – que ce soit par téléphone, email ou tout autre moyen de communication – ou lorsque vous nous faites part d’un problème.
+Ces informations contiennent notamment les données suivantes :
+"\n\n"2.1.1. Lors d’un don avec authentification : votre adresse email ;
+"\n\n"2.1.2. Les dons associés à votre compte dans le cas d’un don avec authentification ;
+"\n\n"2.1.3. Les données que nous pouvons vous demander de fournir lorsque vous nous signalez un problème relatif à nos Plateformes ou à nos services, comme par exemple l’objet de votre demande d’assistance ;
+"\n\n"2.1.4. Vos visites sur l’Application sans association avec votre compte ;
+"\n\n"2.1.5. Le cas échéant, vos réponses à nos sondages et questionnaires ;
+"\n\n"2.1.6. Les données liées à votre localisation lorsque vous activez et authorisez ce service. Ces données ne sont pas conservées;
+"\n\n"2.2. Les données que nous recueillons automatiquement
+"\n\n"2.2.1. Dans le cas où vous vous connectez à nos services en utilisant les fonctionnalités de réseaux sociaux mises à votre disposition, WAYD aura accès à certaines des données (adresse e-mail) de votre compte sur ledit réseau social conformément aux conditions générales d’utilisation du réseau social concerné.
+"\n\n"2.2.2. Lors de chacune de vos visites, nous sommes susceptibles de recueillir, conformément à la législation applicable et avec votre accord, le cas échéant, des informations relatives aux appareils sur lesquels vous utilisez nos services ou aux réseaux depuis lesquels vous accédez à nos services, tels que notamment vos adresses IP, données de connexion, types et versions de navigateurs internet utilisés, types et versions des plugins de votre navigateur, systèmes et plateformes d’exploitation, données concernant votre parcours de navigation sur nos Plateformes, notamment votre parcours sur les différentes pages URL de nos Plateformes, le contenu auquel vous accédez ou que vous consultez, les termes de recherches utilisés, les erreurs de téléchargement, la durée de consultation de certaines pages.
+"\n\n"2.3. Durée de conservation de vos données
+"\n\n"2.3.1. A l’exception des catégories de Données Personnelles visées aux articles 2.3.2. et 2.3.3. ci-dessous, vos Données Personnelles sont archivées à l’issue des périodes suivantes:
+·         5 ans après votre dernière utilisation de nos Plateformes, si vous n’avez pas fermé votre compte;
+·         1 an après la fermeture de votre compte, sauf si vous avez reçu un avis négatif ou un signalement, auquel cas vos données sont conservées pendant 2 ans suivant le dernier avis négatif ou signalement reçu si cette durée est plus longue.
+"\n\n"2.3.2. Dans l’hypothèse où votre compte a été suspendu ou bloqué, nous conservons vos données pour une durée variant de 2 à 10 ans à compter de la suspension afin d’éviter tout contournement de votre part des règles en vigueur sur nos Plateformes.
+"\n\n"3. Comment utilisons-nous les données que nous recueillons ?
+Nous utilisons les données que nous recueillons de manière automatique ou que vous nous fournissez :
+A des fins de statistiques anonymes sans profilage ;
+"\n\n"4. Vos données sont-elles transférées, comment et où ?
+Nous conservons vos Données Personnelles dans l’Union Européenne.
+Sur simple demande, nous pouvons vous fournir la liste des pays où nous conservons vos données et ceux où elles transitent occasionnellement.
+"\n\n"5. Quels sont vos droits sur vos données personnelles ?
+"\n\n"5.1. Lorsque cela est prévu par la législation applicable, vous avez le droit d’obtenir une copie des données personnelles vous concernant que nous détenons. Avant de répondre à votre demande, nous sommes susceptibles de vérifier votre identité.
+"\n\n"5.2. Nous nous efforcerons de donner suite à votre demande dans un délai raisonnable et, en tout état de cause, dans les délais fixés par la loi. Si vous souhaitez exercer ce droit, contactez-nous selon les modalités indiquées à l’article 8 ci-dessous.
+En tant que membre de nos Plateformes, vous avez également la possibilité d’accéder aux Données Personnelles que nous détenons à travers votre compte pour corriger, modifier ou supprimer toute information incorrecte. Vous vous engagez à nous fournir des informations complètes, exactes, valides et à jour. Vous pouvez également fermer votre compte en ligne en tout temps.
+En cas de suppression de votre compte, l’intégralité des vos données et les données associées à votre compte sont supprimées sans possibilités de reprise.
+Cependant veuillez noter que nous sommes susceptibles de conserver certaines informations vous concernant lorsque la loi nous l’impose. C’est par exemple le cas, si nous estimons que vous avez commis une fraude ou violé nos Conditions Générales d’Utilisation et que nous souhaitons éviter que vous contourniez les règles applicables à notre communauté.
+"\n\n"5.3. Vous disposez également du droit de définir des directives relatives au sort de vos Données Personnelles après votre mort. Vous pouvez nous l’indiquer selon les modalités de contact de l’article 12.
+"\n\n"6. Liens vers d’autres sites internet et réseaux sociaux
+Nos Plateformes peuvent contenir des liens vers les sites internet de nos partenaires ou de sociétés tierces. Veuillez noter que ces sites internet ont leur propre politique de confidentialité et que nous déclinons toute responsabilité quant à l’utilisation faite par ces sites des informations collectées lorsque vous cliquez sur ces liens. Nous vous invitons à prendre connaissance de politiques de confidentialité de ces sites avant de leur transmettre vos Données Personnelles.
+"\n\n"7. Modification de notre politique de confidentialité
+Nous pouvons être amenés à modifier occasionnellement la présente politique de confidentialité. Lorsque cela est nécessaire, nous vous en informerons et/ou solliciterons votre accord. Nous vous conseillons de consulter régulièrement cette page pour prendre connaissance des éventuelles modifications ou mises à jour apportées à notre politique de confidentialité.
+"\n\n"8. Contact"\n\n"
+Pour toute question relative à la présente politique de confidentialité ou pour toute demande relative à vos données personnelles, vous pouvez nous contacter en nous adressant un courrier à l’adresse CGU_PC@wayd.fr du présent document et en indiquant en objet « [POLITIQUE_DE_CONFIDENTIALITE_WDONATION] ». </string>
+
+    <string name="erreur_mailnonvalide">"Votre email n'est pas valide "</string>
+    <string name="erreur_problemenonrempli">"Renseignez votre problème "</string>
+
 
 </resources>

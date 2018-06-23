@@ -5,6 +5,8 @@ import com.google.firebase.database.ServerValue;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import fr.wayd.wdonation.R;
+
 public class Commun {
 
     static public String getDateNowStr() {
@@ -17,7 +19,9 @@ public class Commun {
 
    public static String getMessagePartage(Association association){
         return    "Faites comme moi, j'ai fait un don gratuitement à l'association "+association.getNom()+" grace à l'application wDonation."+"\n\n "+
-                "market://details?id=fr.wayd.wdonation";
+                "http://play.google.com/store/apps/details?id=fr.wayd.wdonation";
 
     }
+
+
 }

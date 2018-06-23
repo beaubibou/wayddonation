@@ -5,7 +5,7 @@
     android:id="@+id/constraint"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="5dp"
+
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".AcceuilActivity"
     tools:showIn="@layout/app_bar_acceuil">
@@ -24,11 +24,14 @@
             >
 
             <TextView
+                android:layout_marginTop="5dp"
                 style="@style/Base.TextAppearance.AppCompat.Large"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:text="Les associations du moment"
+                android:text="Ville: Lyon"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 />
 
             <Spinner
@@ -37,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:layout_marginTop="5dp">
+                android:layout_marginTop="2dp">
 
             </Spinner>
 
@@ -49,6 +52,8 @@
                 android:scaleType="fitCenter" />
 
             <TextView
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="5dp"
                 android:id="@+id/titre"
                 style="@style/Base.TextAppearance.AppCompat.Medium"
@@ -60,6 +65,8 @@
 
 
             <TextView
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="5dp"
                 android:id="@+id/detail"
                 style="@style/Base.TextAppearance.AppCompat.Small"
@@ -70,6 +77,8 @@
                 android:maxLines="3" />
 
             <TextView
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:id="@+id/ensavoirplus"
                 android:visibility="gone"
                 style="@style/Base.TextAppearance.AppCompat.Small"
@@ -89,15 +98,17 @@
 
                 <TextView
                     android:id="@+id/text"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
                     style="@style/Base.TextAppearance.AppCompat.Medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
-                    android:text="Dons " />
+                    android:text="Dons déjà réalisés " />
 
                 <TextView
                     android:id="@+id/nbrclicks"
-                    style="@style/Base.TextAppearance.AppCompat.Display1"
+                    style="@style/Base.TextAppearance.AppCompat.Large"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
 
@@ -106,6 +117,8 @@
             </LinearLayout>
 
             <Button
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorPrimary"

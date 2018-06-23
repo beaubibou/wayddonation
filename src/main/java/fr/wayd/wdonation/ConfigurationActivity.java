@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -44,10 +45,21 @@ public class ConfigurationActivity extends AppCompatActivity {
     }
 
     private void updateConfiguration() {
-        int nbrmaxjour = Integer.valueOf(nbrclicsmaxparjour.getText().toString());
-        int versionStore = Integer.valueOf(versionstore.getText().toString());
+
+        int nbrmaxjour = 0;
+        int versionStore = 0;
+        try {
+             nbrmaxjour = Integer.valueOf(nbrclicsmaxparjour.getText().toString());
+             versionStore = Integer.valueOf(versionstore.getText().toString());
+        }
+        catch (Exception e){
+            Toast.makeText(this, "Format non valide", Toast.LENGTH_SHORT).show();
+       return;
+
+        }
         FirebaseDatabase.getInstance().getReference().child("configuration").child("nbrclicksjourmax").setValue(nbrmaxjour);
         FirebaseDatabase.getInstance().getReference().child("configuration").child("versionstore").setValue(versionStore);
+        finish();
     }
 
 

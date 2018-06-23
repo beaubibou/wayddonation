@@ -67,6 +67,10 @@ public class User {
         this.mail = mail;
     }
 
+    public static int getAdminWayd() {
+        return ADMIN_WAYD;
+    }
+
     @Override
     public String toString() {
         return "User{" +

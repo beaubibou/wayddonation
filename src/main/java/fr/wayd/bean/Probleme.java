@@ -4,15 +4,25 @@ public class Probleme {
     private String iduser;
     private String text;
     private String timestamp;
+    private String email;
 
-    public Probleme(String iduser, String text, String timestamp) {
+    public Probleme(String iduser, String text, String timestamp,String email) {
         this.iduser = iduser;
         this.text = text;
         this.timestamp = timestamp;
+        this.email = email;
     }
 
     public Probleme() {
 
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getIduser() {
