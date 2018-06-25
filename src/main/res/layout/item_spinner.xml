@@ -30,5 +30,5 @@
 
     android:padding="10dp"
     android:textStyle="bold"
-    android:gravity="center_horizontal"
+    android:gravity="left"
     tools:text="essai" />

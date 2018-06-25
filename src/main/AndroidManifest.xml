@@ -9,9 +9,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_logo"
         android:label="wDonation"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
@@ -30,9 +30,6 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:name=".PubliciteActivity"
-            android:label="@string/title_publicite" />
         <activity android:name=".AddAssociationActivity" />
         <activity
             android:name=".ListAssociationActivity"
@@ -40,7 +37,8 @@
         <activity
             android:name=".ConfigurationActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".AproposActivity" />
+        <activity android:name=".AproposActivity"
+            android:label="A propos"/>
         <activity
             android:name=".ConceptActivity"
             android:label="" />
@@ -53,7 +51,10 @@
         <activity
             android:name=".ProblemeActivity"
             android:label="" />
-        <activity android:name=".ParametreActivity"></activity>
+        <activity android:name=".ParametreActivity"
+            android:label="Paramètres"
+
+            ></activity>
     </application>
 
 </manifest>

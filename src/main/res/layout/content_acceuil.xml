@@ -47,9 +47,11 @@
             <ImageView
                 android:layout_marginTop="5dp"
                 android:id="@+id/photoassociation"
-                android:layout_width="380dp"
+                android:layout_width="match_parent"
                 android:layout_height="220dp"
-                android:scaleType="fitCenter" />
+                android:scaleType="centerCrop"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"/>
 
             <TextView
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
@@ -100,6 +102,7 @@
                     android:id="@+id/text"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin"
                     android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="10dp"
                     style="@style/Base.TextAppearance.AppCompat.Medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -111,12 +114,14 @@
                     style="@style/Base.TextAppearance.AppCompat.Large"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
+                    tools:text="nbr"
+                    android:layout_marginTop="10dp"
                     android:textStyle="bold|italic" />
 
             </LinearLayout>
 
             <Button
+
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_width="match_parent"

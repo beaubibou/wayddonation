@@ -84,7 +84,7 @@ Les présentes conditions générales sont soumises au droit français en cas de
 
 
     </string>
-    <string name="donencours"> Merci de patientez...</string>
+    <string name="donencours"> Merci de patienter...</string>
     <string name="donok">  Faites votre don</string>
     <string name="donechec"> Une erreur est survenue</string>
     <string name="hintdecrivezprobleme">Décrivez votre problème en quelques mots (500 caractères)</string>
