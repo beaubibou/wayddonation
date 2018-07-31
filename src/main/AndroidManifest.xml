@@ -37,24 +37,28 @@
         <activity
             android:name=".ConfigurationActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".AproposActivity"
-            android:label="A propos"/>
+        <activity
+            android:name=".AproposActivity"
+            android:label="A propos" />
         <activity
             android:name=".ConceptActivity"
-            android:label="" />
+            android:label="Le concept" />
         <activity
             android:name=".CguActivity"
-            android:label="" />
+            android:label="Cgu" />
         <activity
             android:name=".RegleConfidenceActivity"
-            android:label="" />
+            android:label="Politique de confidentialité" />
         <activity
             android:name=".ProblemeActivity"
-            android:label="" />
-        <activity android:name=".ParametreActivity"
-            android:label="Paramètres"
-
-            ></activity>
+            android:label="Problème" />
+        <activity
+            android:name=".ParametreActivity"
+            android:label="Paramètres" />
+        <activity
+            android:name=".WebViewActivity"
+            android:label="L'association"
+          ></activity>
     </application>
 
 </manifest>

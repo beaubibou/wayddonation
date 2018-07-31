@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.content.Intent;
 
@@ -51,7 +52,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     private String TAG = "MainActivity";
     private TextView apropos;
     ProgressDialog mProgressDialog;
-
+    private String android_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +76,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         anonyme.setOnClickListener(this);
         // mSignInButton.setSize(SignInButton.SIZE_WIDE);
         mSignInButton.setOnClickListener(this);
+
+        android_id = Settings.Secure.getString(this.getContentResolver(),
+                Settings.Secure.ANDROID_ID);
+
 
         updateUI(mAuth.getCurrentUser());
 
@@ -155,11 +160,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 nom = "Anonyme";
             }
             Dao_Users.AddUser(currentUser.getUid(), nom, email);
-            Intent appel = new Intent(Login.this,
-                    AcceuilActivity.class);
 
-            appel.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(appel);
+            initNoeudTerminaux();
         }
 
     }
@@ -168,11 +170,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
 
         if (currentUser != null) {
             Dao_Users.AddUser(currentUser.getUid(), "Anonyme", "");
-            Intent appel = new Intent(Login.this,
-                    AcceuilActivity.class);
 
-            appel.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(appel);
+            initNoeudTerminaux();
+
+
         }
 
     }
@@ -228,6 +229,44 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
         } else
             mProgressDialog.dismiss();
     }
+
+
+    private void initNoeudTerminaux() {
+        FirebaseDatabase.getInstance().getReference().child("terminaux").child(android_id).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Object valeur = dataSnapshot.getValue(Object.class);
+
+                if (valeur == null) {
+                    // Lance les cgu
+                    Intent appel = new Intent(Login.this,
+                            CguActivity.class);
+                    appel.putExtra("validecgu", true);
+                    appel.putExtra("android_id", android_id);
+                    appel.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(appel);
+                }
+               else
+                {
+                // Lance l'appli
+                    Intent appel = new Intent(Login.this,
+                            AcceuilActivity.class);
+
+                    appel.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(appel);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+
 
 
     // [END onactivityresult]

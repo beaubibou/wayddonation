@@ -84,9 +84,13 @@ Les présentes conditions générales sont soumises au droit français en cas de
 
 
     </string>
+
+
+    <string name="messagepartage1"> J\'utilise l\'application wDonation qui permet de faire des dons à des associations locales sans dépenser d\'argent. Toi aussi, rejoins la communauté !</string>
+
     <string name="donencours"> Merci de patienter...</string>
     <string name="donok">  Faites votre don</string>
-    <string name="donechec"> Une erreur est survenue</string>
+    <string name="donechec">Pas de publicité à afficher pour le moment</string>
     <string name="hintdecrivezprobleme">Décrivez votre problème en quelques mots (500 caractères)</string>
     <string name="leconcept">Vous avez la fibre sociale sans forcément trouver le temps de participer à la vie associative d’une initiative locale ? wDonation est là pour vous ! "\n\n"Issu d’une volonté commune de changer le quotidien (à notre humble niveau) Philippe et Nicolas vous proposent un moyen simple pour apporter votre contribution contre 2 minutes de votre temps."\n\n"
 
@@ -143,6 +147,10 @@ Pour toute question relative à la présente politique de confidentialité ou po
 
     <string name="erreur_mailnonvalide">"Votre email n'est pas valide "</string>
     <string name="erreur_problemenonrempli">"Renseignez votre problème "</string>
+
+    <string name="title_activity_web_view">WebViewActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 
 
 </resources>

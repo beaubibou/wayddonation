@@ -11,7 +11,7 @@
          android:textStyle="normal|bold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="WAYD DONATION"
+        android:text="wDonation"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
         />
 
@@ -28,7 +28,7 @@
         android:id="@+id/textView7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="WAYD DONATION et les logos"
+        android:text="wDonation et les logos"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
         />
 
@@ -36,7 +36,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="WAYD sont des marques de WAYD"
+        android:text="sont des marques de WAYDapps"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
       />
 

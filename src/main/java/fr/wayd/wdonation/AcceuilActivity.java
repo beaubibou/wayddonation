@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.text.Html;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -24,6 +25,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,13 +36,13 @@ import com.google.android.gms.ads.reward.RewardItem;
 import com.google.android.gms.ads.reward.RewardedVideoAd;
 import com.google.android.gms.ads.reward.RewardedVideoAdListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
 import com.squareup.picasso.Picasso;
 
 
@@ -84,12 +86,13 @@ public class AcceuilActivity extends AppCompatActivity
     private Button don;
     private int nbrTentative = 0;
 
+    public static final int MESSAGE_PARTAGE1=0;
+    public static final int MESSAGE_PARTAGE2=1;
+
     private boolean donok = false;
     private int versionStore;
     private int versionCode;
     private RewardedVideoAd mRewardedVideoAd;
-
-
     private String idApplication = "ca-app-pub-3940256099942544/5224354917";
     private String idBlockReward = "ca-app-pub-3940256099942544/5224354917";
 
@@ -100,12 +103,9 @@ public class AcceuilActivity extends AppCompatActivity
                 idApplication);
         setContentView(R.layout.activity_acceuil);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        mProgressDialog = ProgressDialog.show(this, "Patientez ...", "Chargement...", true);
 
         android_id = Settings.Secure.getString(this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
-        //    mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
-//        mRewardedVideoAd.setRewardedVideoAdListener(this);
 
         PackageInfo pInfo = null;
         try {
@@ -133,15 +133,13 @@ public class AcceuilActivity extends AppCompatActivity
         don.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //    Intent appel = new Intent(AcceuilActivity.this,
-                //          PubliciteActivity.class);
-                //appel.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                //appel.putExtra("association", assocationSelected);
-                //     appel.putExtra("anonyme", anonyme);
-                //startActivity(appel);
-                if (mRewardedVideoAd != null && mRewardedVideoAd.isLoaded()) {
-                    mRewardedVideoAd.show();
-                }
+
+         //       if (mRewardedVideoAd != null && mRewardedVideoAd.isLoaded()) {
+           //      mRewardedVideoAd.show();
+             //  }
+                loadRewardedVideoAd();
+
+
             }
         });
 
@@ -195,8 +193,6 @@ public class AcceuilActivity extends AppCompatActivity
 
         // if (mAuth.getCurrentUser() != null && anonyme == false)
         addUserEventListenerValue();
-
-
         spinnerlistassociation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 assocationSelected = (Association) (spinnerlistassociation.getSelectedItem());
@@ -205,7 +201,7 @@ public class AcceuilActivity extends AppCompatActivity
                 updateUIassociation(assocationSelected);
                 idApplication = assocationSelected.getIdapplication();
                 idBlockReward = assocationSelected.getIdcampagne();
-                loadRewardedVideoAd();
+               // loadRewardedVideoAd();
 
             }
 
@@ -216,18 +212,28 @@ public class AcceuilActivity extends AppCompatActivity
 
         addConfigurationValueListener();
         addChildAssociationListener();
-        initNoeudTerminaux(android_id);
+        addChildTerminauxListener(android_id);
 
 
     }
 
+
+
     private void ouvrePageFaceBook() {
         if (assocationSelected.getLienFacebook() == null || assocationSelected.getLienFacebook().isEmpty())
             return;
+        Intent appel = new Intent(AcceuilActivity.this,
+                WebViewActivity.class);
 
-        Intent i = new Intent(Intent.ACTION_VIEW);
-        i.setData(Uri.parse(assocationSelected.getLienFacebook()));
-        startActivity(i);
+        appel.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        appel.putExtra("lien",assocationSelected.getLienFacebook());
+        startActivity(appel);
+      //  Intent i = new Intent(Intent.ACTION_VIEW);
+       // i.setData(Uri.parse(assocationSelected.getLienFacebook()));
+       // startActivity(i);
+
+
+
     }
 
     private void addConfigurationValueListener() {
@@ -247,34 +253,18 @@ public class AcceuilActivity extends AppCompatActivity
     }
 
     private void loadRewardedVideoAd() {
-        don.setText(getString(R.string.donencours));
-        if (mRewardedVideoAd != null)
-            mRewardedVideoAd.destroy(this);
+        //don.setText(getString(R.string.donencours));
+
+
+        mProgressDialog = ProgressDialog.show(this, "Patientez ...", "Chargement de votre don...", true);
+        mProgressDialog.setCancelable(false);
         mRewardedVideoAd = MobileAds.getRewardedVideoAdInstance(this);
         mRewardedVideoAd.setRewardedVideoAdListener(this);
         mRewardedVideoAd.loadAd(idBlockReward,
                 new AdRequest.Builder().build());
     }
 
-    private void initNoeudTerminaux(final String android_id) {
-        FirebaseDatabase.getInstance().getReference().child("terminaux").child(android_id).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Object valeur = dataSnapshot.getValue(Object.class);
-                mProgressDialog.dismiss();
-                if (valeur == null)
-                    testCGU(android_id);
-                else
-                    addChildTerminauxListener(android_id);
-            }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-    }
 
     private void addChildTerminauxListener(String android_id) {
         FirebaseDatabase.getInstance().getReference().child("terminaux").child(android_id).addChildEventListener(new ChildEventListener() {
@@ -330,10 +320,10 @@ public class AcceuilActivity extends AppCompatActivity
 
         if (nbrtotalclicksjours < nbrMaxClicsAutorise) {
             totalclickjour.setText(Integer.toString(reste) + texte);
-        //    don.setVisibility(View.VISIBLE);
+            don.setVisibility(View.VISIBLE);
         }
         else {
-            totalclickjour.setText("Vous avez utilisé tous vos droits à dons.");
+            totalclickjour.setText("Plus de don pour la journée.");
             don.setVisibility(View.GONE);
         }
     }
@@ -406,10 +396,19 @@ public class AcceuilActivity extends AppCompatActivity
         if (association.getLienFacebook() != null && !association.getLienFacebook().isEmpty())
             ensavoirplus.setVisibility(View.VISIBLE);
 
-        if (association.getUrlphoto() != null && !association.getUrlphoto().isEmpty())
+        if (association.getUrlphoto() != null && !association.getUrlphoto().isEmpty()){
             Picasso.get().load(association.getUrlphoto()).into(photoassociation);
+
+        }
+
         else
             photoassociation.setImageBitmap(null);
+
+        Log.i("taille",""+photoassociation.getWidth());
+        int hauteur=photoassociation.getWidth()*9/16;
+        Log.i("taille",""+hauteur);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(photoassociation.getWidth(), hauteur);
+        photoassociation.setLayoutParams(layoutParams);
 
 
     }
@@ -449,37 +448,6 @@ public class AcceuilActivity extends AppCompatActivity
 
     }
 
-    private void testCGU(final String android_id) {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(AcceuilActivity.this);
-        builder.setCancelable(false);
-        String text = "Conditions générales d'utilisation " + "/n" + getString(R.string.cgu) + "/n" + "Politique de confidentialité" + "/n" + getString(R.string.politiqueconfidentialite);
-        builder.setTitle("Condition générale d'utilisation - Politique de confidentialité ");
-        builder.setMessage(text);
-        builder.setPositiveButton("Accepter", new DialogInterface.OnClickListener() {
-
-            public void onClick(DialogInterface dialog, int which) {
-                FirebaseDatabase.getInstance().getReference().child("terminaux").child(android_id).child(Commun.getDateNowStr()).setValue(new Click(0));
-                addChildTerminauxListener(android_id);
-            }
-        });
-
-        builder.setNegativeButton("Refuser", new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                mAuth.signOut();
-                dialog.dismiss();
-                finish();
-            }
-        });
-
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-
-
-    }
 
 
     @Override
@@ -489,6 +457,7 @@ public class AcceuilActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             moveTaskToBack(true);  // "Hide" your current Activity
+
         }
     }
 
@@ -529,7 +498,7 @@ public class AcceuilActivity extends AppCompatActivity
             startActivity(appel);
 
         } else if (id == R.id.nav_share) {
-            share();
+            share(MESSAGE_PARTAGE1);
 
         } else if (id == R.id.nav_deconnexion) {
             mAuth.signOut();
@@ -609,17 +578,18 @@ public class AcceuilActivity extends AppCompatActivity
             nbrdon.setText("Total de vos dons " + user.getNbrclik());
     }
 
-    private void share() {
-        Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+    private void share(int tymemessage) {
+        Intent sharingIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
+        sharingIntent.setData(Uri.parse("mailto:")); // only email apps should handle this
         sharingIntent.setType("text/plain");
-        String shareBodyText = Commun.getMessagePartage(assocationSelected);
+        String shareBodyText = Commun.getMessagePartage(assocationSelected,tymemessage);
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, getString(R.string.titrepartage));
         // sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBodyText);
-
-        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, Html.fromHtml("<p>Fais comme moi.....</p>" + "<br>" +
+        sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, Html.fromHtml("<p>"+shareBodyText+"</p>" + "<br>" +
                 "<a href='http://play.google.com/store/apps/details?id=fr.wayd.wdonation'>http://play.google.com/store/apps/details?id=fr.wayd.wdonation</a>"));
 
         startActivity(Intent.createChooser(sharingIntent, "Shearing Option"));
+
 
     }
 
@@ -696,7 +666,13 @@ public class AcceuilActivity extends AppCompatActivity
 
     @Override
     public void onRewardedVideoAdLoaded() {
-        don.setText(getString(R.string.donok));
+       // don.setText(getString(R.string.donok));
+        if (mRewardedVideoAd != null && mRewardedVideoAd.isLoaded()) {
+            mRewardedVideoAd.show();
+
+        }
+
+        if (mProgressDialog!=null) mProgressDialog.dismiss();
     }
 
     @Override
@@ -717,7 +693,7 @@ public class AcceuilActivity extends AppCompatActivity
         }
         nbrTentative = 0;
         donok = false;
-        loadRewardedVideoAd();
+
     }
 
     @Override
@@ -729,7 +705,7 @@ public class AcceuilActivity extends AppCompatActivity
         Toast toast = Toast.makeText(this, "Votre don est  pris en compte. Vous pouvez quitter la vidéo.", Toast.LENGTH_LONG);
         toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
-        showAlertDialog();
+       // showAlertDialogPartageDon();
     }
 
     @Override
@@ -743,7 +719,9 @@ public class AcceuilActivity extends AppCompatActivity
         nbrTentative++;
 
         if (nbrTentative > 20) {
-            don.setText(getString(R.string.donechec));
+        //    don.setText(getString(R.string.donechec));
+            Toast toast = Toast.makeText(this, getString(R.string.donechec), Toast.LENGTH_LONG);
+            if (mProgressDialog!=null)mProgressDialog.dismiss();
             nbrTentative = 0;
         } else {
             don.setText(getString(R.string.donencours) + nbrTentative);
@@ -763,7 +741,7 @@ public class AcceuilActivity extends AppCompatActivity
         toast.show();
     }
 
-    private void showAlertDialog() {
+    private void showAlertDialogPartageDon() {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(AcceuilActivity.this);
         builder.setCancelable(false);
@@ -772,7 +750,7 @@ public class AcceuilActivity extends AppCompatActivity
         builder.setPositiveButton("Partager", new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int which) {
-                share();
+                share(MESSAGE_PARTAGE2);
                 dialog.dismiss();
             }
         });
@@ -792,4 +770,44 @@ public class AcceuilActivity extends AppCompatActivity
         alertDialog.show();
 
     }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
+
+    // The following methods are required for Chartboost rewarded video mediation
+    @Override
+    public void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
+    public void onRestart() {
+        super.onRestart();
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+    }
+
+
 }

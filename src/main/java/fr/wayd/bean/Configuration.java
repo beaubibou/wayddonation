@@ -3,6 +3,15 @@ package fr.wayd.bean;
 public class Configuration {
     int nbrclicksjourmax=4;
     int versionstore;
+    String fournisseur;
+
+    public String getFournisseur() {
+        return fournisseur;
+    }
+
+    public void setFournisseur(String fournisseur) {
+        this.fournisseur = fournisseur;
+    }
 
     public int getVersionstore() {
         return versionstore;

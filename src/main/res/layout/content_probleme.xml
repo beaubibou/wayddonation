@@ -18,7 +18,9 @@
         android:layout_height="wrap_content"
 
 
-        android:layout_marginStart="16dp"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+
         android:layout_marginTop="16dp"
         android:text="Décrivez votre problème "
         android:textStyle="normal|bold"
@@ -27,6 +29,9 @@
 
     <EditText
         android:layout_marginTop="15dp"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+
         android:id="@+id/probleme"
         style="@style/Base.TextAppearance.AppCompat.Medium"
         android:layout_width="wrap_content"
@@ -36,6 +41,9 @@
         android:maxLength="500"
       />
     <EditText
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+
         android:layout_marginTop="15dp"
         android:id="@+id/mail"
         style="@style/Base.TextAppearance.AppCompat.Medium"
