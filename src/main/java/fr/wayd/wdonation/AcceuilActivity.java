@@ -497,10 +497,12 @@ public class AcceuilActivity extends AppCompatActivity
             appel.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
             startActivity(appel);
 
-        } else if (id == R.id.nav_share) {
-            share(MESSAGE_PARTAGE1);
+        }
+        //else if (id == R.id.nav_share) {
+           // share(MESSAGE_PARTAGE1);
 
-        } else if (id == R.id.nav_deconnexion) {
+       // }
+        else if (id == R.id.nav_deconnexion) {
             mAuth.signOut();
             finish();
 

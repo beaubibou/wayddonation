@@ -14,7 +14,7 @@
         style="@style/Base.TextAppearance.AppCompat.Display1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Wdonation"
+        android:text="wDonation"
         android:textColor="#FFFFFF"
         android:textStyle="normal|bold" />
 
@@ -23,7 +23,7 @@
         android:id="@+id/imageView"
         android:layout_width="160dp"
         android:layout_height="160dp"
-        app:srcCompat="@mipmap/image" />
+        app:srcCompat="@mipmap/image_login_new" />
 
     <TextView
         android:textColor="#FFFFFF"
